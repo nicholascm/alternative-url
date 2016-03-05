@@ -1,0 +1,26 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "description": "provides a shortened/alternative url",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicholascm90/alternative-url.git"
+  },
+  "keywords": [
+    "url",
+    "switch"
+  ],
+  "author": "Nicholas Morrell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nicholascm90/alternative-url/issues"
+  },
+  "homepage": "https://github.com/nicholascm90/alternative-url#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
