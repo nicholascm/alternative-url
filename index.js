@@ -19,10 +19,12 @@ app.get('/:aUrl', function (req, res) {
         
         //TODO: go find the matching URL and redirect to its associated url
         console.log(findAlternative("www.example.com/"+providedUrl)); 
-        res.redirect(findAlternative("www.example.com/"+providedUrl));       
+        //res.redirect("http://"+findAlternative("www.example.com/"+providedUrl));       
+        res.redirect('http://google.com');
+        
     }
     
-    else if (checkForExisting(providedUrl, alternativeUrls)) {
+    else if (!Number(providedUrl) && checkForExisting(providedUrl, alternativeUrls)) {
     
         res.json({'exists': providedUrl}); //TODO: add logic to get the existing alternate URL.   
     
@@ -76,7 +78,6 @@ function findAlternative(searchString) {
         }
     }); 
     return alternative; 
-
 }
 
 
