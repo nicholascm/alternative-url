@@ -19,8 +19,8 @@ app.get('/:aUrl', function (req, res) {
         
         //TODO: go find the matching URL and redirect to its associated url
         console.log(findAlternative("www.example.com/"+providedUrl)); 
-        //res.redirect("http://"+findAlternative("www.example.com/"+providedUrl));       
-        res.redirect('http://google.com');
+        res.redirect(findAlternative("www.example.com/"+providedUrl));       
+        //res.redirect('http://google.com');
         
     }
     
