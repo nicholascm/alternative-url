@@ -39,10 +39,17 @@
    <h3>Using the Service</h3>
    
     <ol class = "list-group">
-        <li class = "list-group-item">Pass in a url (do not include "http://" to the service.</li> 
-        <li class = "list-group-item">Receive an alternative Url</li>
-        <li class = "list-group-item">Visit the alternative URL</li>
-        <li class = "list-group-item">Be redirected to the original URL you passed in</li>
+        <li class = "list-group-item">Pass in a url (do not include "http://" to the service.<code>https://fcc-learning-nicholascm90.c9users.io/www.google.com</code></li> 
+        <li class = "list-group-item">Receive an alternative Url in the JSON list
+            <code> <br>
+                { <br>
+                    providedUrl: "www.google.com", <br>
+                    alternativeUrl: "https://fierce-everglades-29355.herokuapp.com/1"<br>
+                } <br>
+            </code>
+        </li>
+        <li class = "list-group-item">Visit the alternative URL <code> e.g. https://fcc-learning-nicholascm90.c9users.io/1 </code></li>
+        <li class = "list-group-item">Be redirected to the original URL you passed in <code>www.google.com</code></li>
     </ol> 
     
     <div class="alert alert-info" role="alert">The service will not allow duplicates, and if you pass in a url including "http://", it will fail.</div>
