@@ -2,6 +2,8 @@ var express = require('express');
 
 var app = new express(); 
 
+var baseAppUrl = "https://fierce-everglades-29355.herokuapp.com/"; 
+
 app.use(express.static(__dirname + '/view')); 
 //html files in here
 
@@ -18,21 +20,24 @@ app.get('/:aUrl', function (req, res) {
     if (typeof Number(providedUrl) == "number" && !isNaN(Number(providedUrl))) {
         
         //TODO: go find the matching URL and redirect to its associated url
-        console.log(findAlternative("www.example.com/"+providedUrl)); 
-        res.redirect("http://"+findAlternative("www.example.com/"+providedUrl));       
+        console.log(findAlternative(baseAppUrl+providedUrl)); 
+        res.redirect("http://"+findAlternative(baseAppUrl+providedUrl));       
         //res.redirect('http://google.com');
         
     }
     
     else if (!Number(providedUrl) && checkForExisting(providedUrl, alternativeUrls)) {
     
-        res.json({'exists': providedUrl}); //TODO: add logic to get the existing alternate URL.   
+        res.json({
+            'requested-url': providedUrl, 
+            'message': 'an alternative to the requested url already exists!'
+        }); //TODO: add logic to get the existing alternate URL.   
     
         }
     
     else {
     
-        addToDictionary("www.example.com", providedUrl, alternativeUrls); 
+        addToDictionary(baseAppUrl, providedUrl, alternativeUrls); 
         res.json(alternativeUrls); 
     }
     
@@ -93,7 +98,7 @@ function addToDictionary(baseUrlString, value, anArray) {
 var count = 0; 
 
 function getAlternativeUrl () {
-    var alternativeUrl = "/"+count; 
+    var alternativeUrl = count; 
     count++; 
     return alternativeUrl; 
 }
