@@ -13,14 +13,18 @@ app.get('/', function(req, res) {
 
 app.get('/:aUrl', function (req, res) {
     var providedUrl = req.params.aUrl; 
+    //console.log(typeof Number(providedUrl) == "number", isNaN(Number(providedUrl)))
     
-    if (false) {
-                
+    if (typeof Number(providedUrl) == "number" && !isNaN(Number(providedUrl))) {
+        
+        //TODO: go find the matching URL and redirect to its associated url
+        console.log(findAlternative("www.example.com/"+providedUrl)); 
+        res.redirect(findAlternative("www.example.com/"+providedUrl));       
     }
     
     else if (checkForExisting(providedUrl, alternativeUrls)) {
     
-        res.json({'exists': providedUrl}); //TODO: add logic to get the existing URL.   
+        res.json({'exists': providedUrl}); //TODO: add logic to get the existing alternate URL.   
     
         }
     
@@ -64,6 +68,17 @@ function checkForExisting(aSearchTerm, anArray) {
     return exists; 
 }
 
+function findAlternative(searchString) {
+    var alternative = ""; 
+    alternativeUrls.forEach(function(value) {
+        if (value.alternativeUrl == searchString) {
+            alternative = value.providedUrl; 
+        }
+    }); 
+    return alternative; 
+
+}
+
 
 //two functions below are for adding a new URL and generating a new URL 
 
@@ -81,3 +96,4 @@ function getAlternativeUrl () {
     count++; 
     return alternativeUrl; 
 }
+
