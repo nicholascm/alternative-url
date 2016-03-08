@@ -13,17 +13,15 @@ app.get('/', function(req, res) {
     res.sendFile("index.html"); 
 }); 
 
-app.get('/:aUrl', function (req, res) {
-    var providedUrl = req.params.aUrl; 
+app.get('/new/*', function (req, res) {
+    var providedUrl = req.params[0]; 
+    console.log(providedUrl); 
     //console.log(typeof Number(providedUrl) == "number", isNaN(Number(providedUrl)))
     
+    //TODO: encode and decode URL to check for appropriate characters and allow for proper format
     if (typeof Number(providedUrl) == "number" && !isNaN(Number(providedUrl))) {
-        
-        //TODO: go find the matching URL and redirect to its associated url
-        console.log(findAlternative(baseAppUrl+providedUrl)); 
-        res.redirect("http://"+findAlternative(baseAppUrl+providedUrl));       
-        //res.redirect('http://google.com');
-        
+
+        res.redirect(findAlternative(baseAppUrl+providedUrl));       
     }
     
     else if (!Number(providedUrl) && checkForExisting(providedUrl, alternativeUrls)) {
@@ -37,7 +35,7 @@ app.get('/:aUrl', function (req, res) {
     
     else {
     
-        addToDictionary(baseAppUrl, providedUrl, alternativeUrls); 
+        addToDictionary(baseAppUrl, decodeURIComponent(providedUrl), alternativeUrls); 
         res.json(alternativeUrls); 
     }
     
@@ -60,6 +58,8 @@ app.listen(app.get('port'), function() {
 
 
 //in memory database of URLs
+
+//all of the below should be abstracted into its own module for URL management and brought in as a dependency.
 
 var alternativeUrls = []; 
 
