@@ -13,7 +13,7 @@ app.get('/', function(req, res) {
     res.sendFile("index.html"); 
 }); 
 
-app.get('/new/*', function (req, res) {
+app.get('/*', function (req, res) {
     var providedUrl = req.params[0]; 
     console.log(providedUrl); 
     //console.log(typeof Number(providedUrl) == "number", isNaN(Number(providedUrl)))
