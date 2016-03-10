@@ -20,12 +20,12 @@ app.get('/*', function (req, res) {
     
     //TODO: encode and decode URL to check for appropriate characters and allow for proper format
     if (typeof Number(providedUrl) == "number" && !isNaN(Number(providedUrl))) {
-
+        
         res.redirect(findAlternative(baseAppUrl+providedUrl));       
     }
     
     else if (!Number(providedUrl) && checkForExisting(providedUrl, alternativeUrls)) {
-    
+        console.log('else if', providedUrl); 
         res.json({
             'requested-url': providedUrl, 
             'message': 'an alternative to the requested url already exists!'
@@ -34,10 +34,17 @@ app.get('/*', function (req, res) {
         }
     
     else {
-    
-        addToDictionary(baseAppUrl, decodeURIComponent(providedUrl), alternativeUrls); 
-        res.json(alternativeUrls); 
+        console.log('else'); 
+
+        addToDictionary(baseAppUrl, providedUrl, alternativeUrls); 
+        res.json(alternativeUrls[alternativeUrls.length-1]); 
     }
+    
+}); 
+
+app.get('/all', function (req, res) {
+    
+    res.json(alternativeUrls); 
     
 }); 
 
@@ -46,20 +53,10 @@ app.listen(app.get('port'), function() {
     console.log('app is running on port', app.get('port')); 
 }); 
 
-//0: check if the provided input is a URL, or a number
-//if its a number and it exists, go to that URL
-//if its a number, and it doesn't exist, respond with an error
-//first check if the URL exists in the URL dictionary
-//if it does, print out that URL and the shortened URL 
-//if it doesn't, create a new URL for it, and respond with the JSON 
-//of the supplied URL vs the alternative URL 
-
-
-
 
 //in memory database of URLs
 
-//all of the below should be abstracted into its own module for URL management and brought in as a dependency.
+//TODO: all of the below should be abstracted into its own module for URL management and brought in as a dependency.
 
 var alternativeUrls = []; 
 
