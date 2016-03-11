@@ -4,7 +4,7 @@ var app = new express();
 
 var validator = require('./js/validator.js'); 
 
-var valid = new validator('https?:\/\/www\.[a-z]{1,100}\.[a-z]{2,3}.*'); 
+var valid = new validator('https?:\/\/www\.[a-z]{1,100}\.[a-z]{2,3}\/.*'); 
 
 var baseAppUrl = "https://fierce-everglades-29355.herokuapp.com/"; 
 
