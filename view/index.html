@@ -15,8 +15,7 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">
-         url-shortener
-       <!-- <img alt="Brand" src="..."> -->
+         url-alias
       </a>
     </div>
   </div>
@@ -39,20 +38,20 @@
    <h3>Using the Service</h3>
    
     <ol class = "list-group">
-        <li class = "list-group-item">Pass in a url (do not include "http://" to the service.<code>https://fierce-everglades-29355.herokuapp.com/www.google.com</code></li> 
-        <li class = "list-group-item">Receive an alternative Url in the JSON list
+        <li class = "list-group-item">Pass in a valid URL (you must include HTTP or HTTPS) <code>https://fierce-everglades-29355.herokuapp.com/https://www.google.com</code></li> 
+        <li class = "list-group-item">Receive an alternative URL in JSON.
             <code> <br>
                 { <br>
-                    providedUrl: "www.google.com", <br>
-                    alternativeUrl: "https://fierce-everglades-29355.herokuapp.com/1"<br>
+                        providedUrl: "https://www.google.com", <br>
+                        alternativeUrl: "https://fierce-everglades-29355.herokuapp.com/1"<br>
                 } <br>
             </code>
         </li>
-        <li class = "list-group-item">Visit the alternative URL <code> e.g. https://fcc-learning-nicholascm90.c9users.io/1 </code></li>
-        <li class = "list-group-item">Be redirected to the original URL you passed in <code>www.google.com</code></li>
+        <li class = "list-group-item">Visit the alternative URL <code> e.g. https://fierce-everglades-29355.herokuapp.com/1 </code></li>
+        <li class = "list-group-item">Be redirected to the original URL you passed in <code>https://www.google.com</code></li>
     </ol> 
     
-    <div class="alert alert-info" role="alert">The service will not allow duplicates, and if you pass in a url including "http://", it will fail.</div>
+    <div class="alert alert-info" role="alert">The service will not allow duplicates. Invalid URLs will respond with an error.</div>
 
 </div> 
     
