@@ -18,12 +18,16 @@ app.get('/', function(req, res) {
 }); 
 
 app.get('/*', function (req, res) {
+    
     var providedUrl = req.params[0]; 
-    console.log(providedUrl); 
+
     
-    var pattern = /https?:\/\//; 
+    if (typeof Number(providedUrl) == "number" && !isNaN(Number(providedUrl))) {
+        
+        res.redirect(findAlternative(baseAppUrl+providedUrl));       
+    }
     
-    if (!valid.test(providedUrl)) {
+    else if (!valid.test(providedUrl)) {
         
         res.json({
             "error": "That's not a properly formatted URL."
@@ -31,13 +35,8 @@ app.get('/*', function (req, res) {
 
     }
     
-    else if (typeof Number(providedUrl) == "number" && !isNaN(Number(providedUrl))) {
-        
-        res.redirect(findAlternative(baseAppUrl+providedUrl));       
-    }
-    
     else if (!Number(providedUrl) && checkForExisting(providedUrl, alternativeUrls)) {
-        console.log('else if', providedUrl); 
+
         res.json({
             'requested-url': providedUrl, 
             'message': 'an alternative to the requested url already exists!'
@@ -46,7 +45,6 @@ app.get('/*', function (req, res) {
         }
     
     else {
-        console.log('else'); 
 
         addToDictionary(baseAppUrl, providedUrl, alternativeUrls); 
         res.json(alternativeUrls[alternativeUrls.length-1]); 
@@ -54,11 +52,6 @@ app.get('/*', function (req, res) {
     
 }); 
 
-app.get('/all', function (req, res) {
-    
-    res.json(alternativeUrls); 
-    
-}); 
 
 
 app.listen(app.get('port'), function() {
