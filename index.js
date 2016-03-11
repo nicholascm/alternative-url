@@ -2,6 +2,10 @@ var express = require('express');
 
 var app = new express(); 
 
+var validator = require('./js/validator.js'); 
+
+var valid = new validator('https?:\/\/'); 
+
 var baseAppUrl = "https://fierce-everglades-29355.herokuapp.com/"; 
 
 app.use(express.static(__dirname + '/view')); 
@@ -16,10 +20,18 @@ app.get('/', function(req, res) {
 app.get('/*', function (req, res) {
     var providedUrl = req.params[0]; 
     console.log(providedUrl); 
-    //console.log(typeof Number(providedUrl) == "number", isNaN(Number(providedUrl)))
     
-    //TODO: encode and decode URL to check for appropriate characters and allow for proper format
-    if (typeof Number(providedUrl) == "number" && !isNaN(Number(providedUrl))) {
+    var pattern = /https?:\/\//; 
+    
+    if (!valid.test(providedUrl)) {
+        
+        res.json({
+            "error": "That's not a properly formatted URL."
+        }); 
+
+    }
+    
+    else if (typeof Number(providedUrl) == "number" && !isNaN(Number(providedUrl))) {
         
         res.redirect(findAlternative(baseAppUrl+providedUrl));       
     }
