@@ -19,9 +19,9 @@ app.get('/', function(req, res) {
 
 app.get('/*', function (req, res) {
     
-    var providedUrl = req.params[0]; 
+    var providedUrl = req.url.substring(1); 
+    console.log(req.url); 
 
-    
     if (typeof Number(providedUrl) == "number" && !isNaN(Number(providedUrl))) {
         
         res.redirect(findAlternative(baseAppUrl+providedUrl));       
