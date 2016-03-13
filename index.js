@@ -4,6 +4,10 @@ var app = new express();
 
 var validator = require('./js/validator.js'); 
 
+var DictionaryManager = require('./js/dictionaryManager.js'); 
+
+var dictionaryMgr = new DictionaryManager("https://fierce-everglades-29355.herokuapp.com/"); 
+
 var valid = new validator('https?:\/\/www\.[a-z]{1,100}\.[a-z]{2,3}.*'); 
 
 var baseAppUrl = "https://fierce-everglades-29355.herokuapp.com/"; 
@@ -15,6 +19,14 @@ app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function(req, res) {
     res.sendFile("index.html"); 
+}); 
+
+app.get('/test', function(req, res) {
+    var providedUrl = "test"; 
+    dictionaryMgr.addToDictionary(providedUrl); 
+    res.json(dictionaryMgr.alternativeUrls[dictionaryMgr.alternativeUrls.length-1]); 
+    console.log(dictionaryMgr.alternativeUrls); 
+
 }); 
 
 app.get('/*', function (req, res) {
@@ -59,7 +71,6 @@ app.listen(app.get('port'), function() {
 }); 
 
 
-//in memory database of URLs
 
 //TODO: all of the below should be abstracted into its own module for URL management and brought in as a dependency.
 
@@ -76,6 +87,8 @@ function checkForExisting(aSearchTerm, anArray) {
     }); 
     return exists; 
 }
+
+//searches for and provides an alternative url 
 
 function findAlternative(searchString) {
     var alternative = ""; 
