@@ -22,7 +22,7 @@ app.get('/*', function (req, res) {
     var providedUrl = req.url.substring(1); 
     console.log(req.url); 
 
-    if (typeof Number(providedUrl) == "number" && !isNaN(Number(providedUrl))) {
+    if (typeof Number(providedUrl) == "number" && !isNaN(Number(providedUrl)) && Number(providedUrl) < alternativeUrls.length) {
         
         res.redirect(findAlternative(baseAppUrl+providedUrl));       
     }
