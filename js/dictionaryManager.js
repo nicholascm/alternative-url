@@ -25,22 +25,25 @@ function DictionaryManager(baseUrl) {
     
     this.findAlternative = function(searchString) {
         
+        var searchStringWithBase = this.baseUrl + searchString; 
         var alternative = ""; 
         
         this.alternativeUrls.forEach(function(value) {
-            if (value.alternativeUrl == searchString) {
+            if (value.alternativeUrl == searchStringWithBase) {
                 alternative = value.providedUrl; 
             }
         }); 
-        
+        console.log("find it", alternative); 
         return alternative; 
     }; 
     
     this.addToDictionary = function(value) {
-      this.alternativeUrls.push({
-            providedUrl: value, 
-            alternativeUrl: this.baseUrl+this.getAlternativeUrl()
+        
+        this.alternativeUrls.push({
+                providedUrl: value, 
+                alternativeUrl: this.baseUrl+this.getAlternativeUrl()
         });  
+    
     }; 
     
     this.getAlternativeUrl = function() {
