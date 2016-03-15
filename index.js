@@ -34,9 +34,10 @@ app.get('/*', function (req, res) {
     var providedUrl = req.url.substring(1); 
     console.log(req.url); 
 
-    if (typeof Number(providedUrl) == "number" && !isNaN(Number(providedUrl)) && Number(providedUrl) < alternativeUrls.length) {
+    if (typeof Number(providedUrl) == "number" && !isNaN(Number(providedUrl)) && Number(providedUrl) < dictionaryMgr.alternativeUrls.length) {
         
-        res.redirect(findAlternative(baseAppUrl+providedUrl));       
+        res.redirect(dictionaryMgr.findAlternative(providedUrl));
+        
     }
     
     else if (!valid.test(providedUrl)) {
@@ -47,19 +48,19 @@ app.get('/*', function (req, res) {
 
     }
     
-    else if (!Number(providedUrl) && checkForExisting(providedUrl, alternativeUrls)) {
+    else if (!Number(providedUrl) && dictionaryMgr.checkForExisting(providedUrl)) {
 
         res.json({
             'requested-url': providedUrl, 
             'message': 'an alternative to the requested url already exists!'
-        }); //TODO: add logic to get the existing alternate URL.   
+        });    
     
         }
     
     else {
 
-        addToDictionary(baseAppUrl, providedUrl, alternativeUrls); 
-        res.json(alternativeUrls[alternativeUrls.length-1]); 
+        dictionaryMgr.addToDictionary(providedUrl); 
+        res.json(dictionaryMgr.alternativeUrls[dictionaryMgr.alternativeUrls.length-1]); 
     }
     
 }); 
@@ -72,49 +73,4 @@ app.listen(app.get('port'), function() {
 
 
 
-//TODO: all of the below should be abstracted into its own module for URL management and brought in as a dependency.
-
-var alternativeUrls = []; 
-
-//looks through the dictionary to see if a URL already exists for the provided url 
-
-function checkForExisting(aSearchTerm, anArray) {
-    var exists = false; 
-    anArray.forEach(function(value) {
-        if (value.providedUrl == aSearchTerm) {
-            exists = true; 
-        }
-    }); 
-    return exists; 
-}
-
-//searches for and provides an alternative url 
-
-function findAlternative(searchString) {
-    var alternative = ""; 
-    alternativeUrls.forEach(function(value) {
-        if (value.alternativeUrl == searchString) {
-            alternative = value.providedUrl; 
-        }
-    }); 
-    return alternative; 
-}
-
-
-//two functions below are for adding a new URL and generating a new URL 
-
-function addToDictionary(baseUrlString, value, anArray) {
-    anArray.push({
-        providedUrl: value, 
-        alternativeUrl: baseUrlString+getAlternativeUrl()
-    }); 
-}
-
-var count = 0; 
-
-function getAlternativeUrl () {
-    var alternativeUrl = count; 
-    count++; 
-    return alternativeUrl; 
-}
 
