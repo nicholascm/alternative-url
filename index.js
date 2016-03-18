@@ -21,13 +21,6 @@ app.get('/', function(req, res) {
     res.sendFile("index.html"); 
 }); 
 
-app.get('/test', function(req, res) {
-    var providedUrl = "test"; 
-    dictionaryMgr.addToDictionary(providedUrl); 
-    res.json(dictionaryMgr.alternativeUrls[dictionaryMgr.alternativeUrls.length-1]); 
-    console.log(dictionaryMgr.alternativeUrls); 
-
-}); 
 
 app.get('/*', function (req, res) {
     
